@@ -5,10 +5,6 @@ const TranscriptionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: false
   },
-  audioUrl: {
-    type: String,
-    required: true
-  },
   transcriptUrl: {
     type: String,
     required: true

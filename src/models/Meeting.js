@@ -17,6 +17,10 @@ const meetingSchema = new mongoose.Schema({
     ref: 'User', 
     required: true 
   },
+  audioUrl: {
+    type: String,
+    required: false
+  },
 }, { timestamps: true,versionKey: false });
 
 const Meeting = mongoose.model('Meeting', meetingSchema);
