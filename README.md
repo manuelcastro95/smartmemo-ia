@@ -1,4 +1,4 @@
-cat > README.md << 'EOL'
+
 # 🎙️ SmartMemo AI
 
 SmartMemo AI es una aplicación innovadora que transforma tus reuniones en conocimiento accionable. Utilizando tecnologías de vanguardia en transcripción de voz y procesamiento de lenguaje natural, convierte automáticamente el audio de tus reuniones en resúmenes estructurados, puntos de acción y análisis detallados.
@@ -39,40 +39,40 @@ SmartMemo AI es una aplicación innovadora que transforma tus reuniones en conoc
 
 ## 📋 Requisitos Previos
 
-\`\`\`
+
 Node.js >= 14.0.0
 MongoDB >= 4.0.0
 npm >= 6.0.0
-\`\`\`
+
 
 ## 🛠️ Instalación
 
 1. **Clonar el repositorio**
-\`\`\`
-git clone https://github.com/tu-usuario/smartmemo-ai.git
+
+git clone https://github.com/manuelcastro95/smartmemo-ai.git
 cd smartmemo-ai
-\`\`\`
+
 
 2. **Instalar dependencias**
-\`\`\`
+
 npm install
-\`\`\`
+
 
 3. **Configurar variables de entorno**
-\`\`\`
+
 cp .env.example .env
 # Editar .env con tus credenciales
-\`\`\`
+
 
 4. **Iniciar la aplicación**
-\`\`\`
+
 npm run dev     # Entorno de desarrollo
 npm start       # Entorno de producción
-\`\`\`
+
 
 ## 🔑 Variables de Entorno
 
-\`\`\`
+
 # Server
 PORT=3000
 NODE_ENV=development
@@ -91,7 +91,7 @@ OPENAI_API_KEY=tu_api_key
 
 # JWT
 JWT_SECRET=tu_jwt_secret
-\`\`\`
+
 
 ## 📚 API Endpoints
 
@@ -133,7 +133,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.m
 
 ## 👥 Autores
 
-- **Manuel Castro** - *Trabajo Inicial* - [manuelcastro95](https://github.com/manuelcastro95)
+- **Manuel Castro**  - [manuelcastro95](https://github.com/manuelcastro95)
 
 ## 🙏 Agradecimientos
 
@@ -143,4 +143,3 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.m
 
 ---
 ⌨️ con ❤️ por [Manuel Castro](https://github.com/manuelcastro95)
-EOL
