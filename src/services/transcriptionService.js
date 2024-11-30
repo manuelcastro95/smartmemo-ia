@@ -4,7 +4,7 @@ const Transcription = require('../models/Transcription');
 
 // Este servicio maneja la transcripción de audio usando AWS Transcribe
 // La función principal transcribeAudio recibe una URL de audio y un ID de usuario
-const transcribeAudio = async (audioUrl, userId) => {
+const transcribeAudio = async (audioUrl, userId, meetingId) => {
 
   // Inicializa el cliente de AWS Transcribe
   const transcribe = new TranscribeClient({ region: process.env.AWS_REGION });
@@ -32,7 +32,7 @@ const transcribeAudio = async (audioUrl, userId) => {
     // Espera 2 segundos para asegurar que el archivo esté disponible en S3
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    return await saveTranscription(transcriptUri, audioUrl, userId);
+    return await saveTranscription(transcriptUri, audioUrl, userId, meetingId);
   } catch (error) {
     console.error(`Error al iniciar el trabajo de transcripción: ${error.message}`);
     throw new Error('Error en la transcripción con AWS Transcribe');
@@ -40,7 +40,7 @@ const transcribeAudio = async (audioUrl, userId) => {
 };
 
 // Función para guardar la transcripción en MongoDB
-const saveTranscription = async (transcriptUri, audioUrl, userId) => {
+const saveTranscription = async (transcriptUri, audioUrl, userId, meetingId) => {
   try {
     // Procesa la URI para obtener la ruta correcta del archivo en S3
     const url = new URL(transcriptUri);
@@ -81,7 +81,7 @@ const saveTranscription = async (transcriptUri, audioUrl, userId) => {
 
     // Creamos un nuevo registro en MongoDB con la transcripción
     const transcription = new Transcription({
-
+      meetingId: meetingId,
       userId,
       audioUrl,
       transcriptUrl: transcriptUri,

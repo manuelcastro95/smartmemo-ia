@@ -11,12 +11,24 @@ const s3Client = new S3Client({
     }
 });
 
+// Función auxiliar para formatear el nombre del archivo
+const formatFileName = (fileName) => {
+    return fileName
+        .normalize('NFD')                     // Descomponer caracteres especiales
+        .replace(/[\u0300-\u036f]/g, '')     // Eliminar diacríticos
+        .replace(/[^a-zA-Z0-9.]/g, '-')      // Reemplazar caracteres especiales y espacios con guion
+        .replace(/-+/g, '-')                 // Evitar guiones múltiples consecutivos
+        .toLowerCase();                      // Convertir a minúsculas
+};
+
 // Función para subir a S3
 const uploadToS3 = async (file) => {
     const fileStream = fs.createReadStream(file.path);
+    const formattedFileName = formatFileName(file.originalname);
+    
     const uploadParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: file.originalname,
+        Key: formattedFileName,
         Body: fileStream,
         ContentType: file.mimetype
     };

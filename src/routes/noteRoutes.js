@@ -1,16 +1,24 @@
 const express = require('express');
 const {
   createNote,
-  getNotesByMeeting,
+  getNotesByTranscription,
   deleteNote,
+  getNoteById
 } = require('../controllers/noteController');
 const authMiddleware = require('../middlewares/authMiddleware'); // Importar el middleware
 
 const router = express.Router();
 
-// Rutas CRUD para las anotaciones protegidas con el middleware
+// Rutas para las notas protegidas con el middleware
 router.post('/', authMiddleware, createNote);
-router.get('/:meetingId', authMiddleware, getNotesByMeeting);
+
+//traer nota de una reunion
+router.get('/:noteId', authMiddleware, getNoteById);
+
+//traer nota de una transcription
+router.get('/:transcriptionId', authMiddleware, getNotesByTranscription);
+
+//eliminar una nota
 router.delete('/:id', authMiddleware, deleteNote);
 
 module.exports = router;

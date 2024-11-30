@@ -1,11 +1,17 @@
 const Note = require('../models/Note');
+const Transcription = require('../models/Transcription');
 
 // Crear una nueva anotación
 exports.createNote = async (req, res) => {
-  const { content, type, meetingId } = req.body;
+  const { resumen, transcriptionId } = req.body;
+
+  const transcription = await Transcription.findById(transcriptionId);
+
+  //aqui se llamara el servicio de chatgpt para generar el resumen el cual recibe el transcriptionText
+
 
   try {
-    const newNote = await Note.create({ content, type, meetingId });
+    const newNote = await Note.create({ resumen, transcriptionId });
     res.status(201).json(newNote);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -13,12 +19,23 @@ exports.createNote = async (req, res) => {
 };
 
 // Obtener todas las anotaciones de una reunión
-exports.getNotesByMeeting = async (req, res) => {
-  const { meetingId } = req.params;
+exports.getNotesByTranscription = async (req, res) => {
+  const { transcriptionId } = req.params;
 
   try {
-    const notes = await Note.find({ meetingId });
+    const notes = await Note.find({ transcriptionId });
     res.status(200).json(notes);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Obtener una anotación por su ID
+exports.getNoteById = async (req, res) => {
+  const { noteId } = req.params;
+  try {
+    const note = await Note.findById(noteId);
+    res.status(200).json(note);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

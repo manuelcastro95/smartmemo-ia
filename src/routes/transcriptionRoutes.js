@@ -1,18 +1,27 @@
-
 const express = require('express');
 const multer = require('multer');
-const { transcribe,uploadToS3,getTranscriptionBySpeakers,getTranscriptionAsConversation } = require('../controllers/transcriptionController.js');
+const { transcribe,getTranscriptionBySpeakers,generateTranscription, getAllTranscriptions, getNotesByTranscription, getTranscriptionAndSummary } = require('../controllers/transcriptionController.js');
 
 
 const upload = multer({ dest: 'uploads/' })
 
 const router = express.Router();
 
+//traer todas las transcripciones
+router.get('/', getAllTranscriptions);
+
+//transcribir audio
 router.post('/transcribe', upload.single('audio'), transcribe);
 
-router.post('/upload', upload.single('audio'), uploadToS3);
+//generar transcripcion
+router.post('/generate-transcription', generateTranscription);
 
+//traer notas de una transcription
+router.get('/:transcriptionId/notes', getNotesByTranscription);
 
+//traer resumen de una transcription
+router.get('/:transcriptionId/summary', getTranscriptionAndSummary);
+
+//traer participantes de una transcription
 router.get('/:transcriptionId/speakers', getTranscriptionBySpeakers);
-router.get('/:transcriptionId/conversation', getTranscriptionAsConversation);
 module.exports = router;
