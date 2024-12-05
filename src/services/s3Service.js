@@ -23,20 +23,17 @@ const formatFileName = (fileName) => {
 
 // Función para subir a S3
 const uploadToS3 = async (file) => {
-    const fileStream = fs.createReadStream(file.path);
     const formattedFileName = formatFileName(file.originalname);
     
     const uploadParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: formattedFileName,
-        Body: fileStream,
+        Body: file.buffer,
         ContentType: file.mimetype
     };
 
     try {
         const data = await s3Client.send(new PutObjectCommand(uploadParams));
-        
-        // Construir la URL del archivo subido
         const fileUrl = `https://${uploadParams.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
         console.log("se termino de subir el archivo", fileUrl);
         return fileUrl;

@@ -3,7 +3,13 @@ const { createMeeting, getMeetings, getMeetingById, updateMeeting, deleteMeeting
 const { generateTranscription, getTranscriptionAsConversation } = require('../controllers/transcriptionController');
 const authMiddleware = require('../middlewares/authMiddleware'); 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' })
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    limits: {
+        fileSize: 100 * 1024 * 1024, // Limitar a 100MB
+    }
+});
 
 const router = express.Router();
 
