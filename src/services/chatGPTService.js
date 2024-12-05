@@ -3,7 +3,7 @@ const OpenAI = require('openai');
 class ChatGPTService {
   constructor() {
     this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: '',
     });
   }
 
