@@ -245,9 +245,24 @@ exports.getAllTranscriptions = async (req, res) => {
 };
 
 exports.getNotesByTranscription = async (req, res) => {
-    const { transcriptionId } = req.params;
-    const notes = await Note.find({ transcriptionId });
-    res.json(notes);
+    try {
+        const { transcriptionId } = req.params;
+        
+        if (!transcriptionId) {
+            return res.status(400).json({ 
+                message: 'Se requiere un ID de transcripción válido' 
+            });
+        }
+
+        const notes = await Note.find({ transcriptionId });
+        res.json(notes);
+    } catch (error) {
+        console.error('Error al obtener notas:', error);
+        res.status(500).json({ 
+            message: 'Error al obtener las notas',
+            error: error.message 
+        });
+    }
 };
 
 // Función para obtener una transcripción y generar un resumen
